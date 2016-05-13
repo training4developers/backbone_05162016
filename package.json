@@ -1,0 +1,55 @@
+{
+  "name": "backbone_05162016",
+  "version": "0.1.0",
+  "description": "TechStars Node/Backbone Class",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/training4developers/backbone_05162016.git"
+  },
+  "keywords": [],
+  "author": "Eric W. Greene",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/training4developers/backbone_05162016/issues"
+  },
+  "homepage": "https://github.com/training4developers/backbone_05162016#readme",
+  "dependencies": {
+    "backbone": "^1.3.3",
+    "bootstrap": "^4.0.0-alpha.2",
+    "es6-promise": "^3.1.2",
+    "handlebars": "^4.0.5",
+    "hapi": "^13.4.0",
+    "jquery": "^2.2.3",
+    "marionette": "0.0.0",
+    "react": "^0.14.8",
+    "react-dom": "^0.14.8",
+    "socket.io": "^1.4.6",
+    "underscore": "^1.8.3",
+    "whatwg-fetch": "^0.11.0"
+  },
+  "devDependencies": {
+    "babel-core": "6.5.2",
+    "babel-loader": "6.2.3",
+    "babel-polyfill": "6.5.0",
+    "babel-preset-es2015": "6.5.0",
+    "babel-preset-react": "6.5.0",
+    "exports-loader": "^0.6.3",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^6.0.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-webpack": "^1.0.11",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-sass": "^2.2.0",
+    "imports-loader": "^0.6.5",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-stream": "^3.1.0"
+  }
+}
