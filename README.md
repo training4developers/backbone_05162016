@@ -7,7 +7,7 @@ Eric Greene - [http://t4d.io](http://t4d.io) - [LinkedIn](https://www.linkedin.c
 ## Schedule
 
 Class:
-- Monday - Friday - 9:30am to 4:30pm
+- Monday - Thursday - 9:30am to 4:30pm
 
 Breaks:
 - Morning: 10:50am - 11:00am
@@ -20,7 +20,7 @@ Breaks:
 - Day 1 - Backbone/Marionette
 - Day 2 - Backbone/Marionette
 - Day 3 - Node/Hapi/SocketIO
-- Day 4 - Node/Hapi/SocketIO
+- Day 4 - SocketIO/Unit Testing
 
 ## Links
 
@@ -52,11 +52,11 @@ Step 3: From the terminal, run the following commands:
 ```bash
 $ npm i
 
-$ npm i -g grunt eslint eslint-plugin-react webpack babel-eslint
+$ npm i -g grunt-cli eslint eslint-plugin-react webpack babel-eslint
 
 $ grunt
 ```
-If you prefer to use Gulp, then substitute 'gulp' for 'grunt' in the above command.
+If you prefer to use Gulp, then substitute 'gulp' for 'grunt-cli' and 'grunt' in the commands above.
 
 Step 4: Open a new terminal window, change to the project folder.
 

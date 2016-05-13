@@ -1,14 +1,16 @@
 const fs = require('fs');
 const path = require('path');
-
 const webpack = require('webpack');
 const webpackStream = require('webpack-stream');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const sass = require('gulp-sass');
+const handlebars = require('gulp-handlebars');
+const defineModule = require('gulp-define-module');
 
 const serverAppFiles = ['src/**/*.js','!src/www/**'];
 const webAppFiles = ['src/www/**/*.js'];
+const webAppTemplateFiles = ['src/www/tpls/*.hbs'];
 const webAppHtmlFiles = ['src/www/**/*.html'];
 const webAppSassFiles = ['src/www/css/**/*.scss'];
 
@@ -63,21 +65,28 @@ gulp.task('process-web-app-js', () =>
 				.pipe(gulp.dest('dist/www/js'))
 				.on('end', resolve)))).catch(err => console.dir(err)));
 
+gulp.task('process-web-app-templates', function() {
+	gulp.src(webAppTemplateFiles)
+		.pipe(handlebars())
+		.pipe(defineModule('node'))
+		.pipe(gulp.dest('./dist/www/tpls'));
+});
+
 gulp.task('server', () =>
-	fs.readFile('./config.json', (err, data) => {
-		if (err) return console.dir(err);
-		const config = JSON.parse(data);
-		require('./dist/server.js').default(config);
-	}));
+	require('./dist/server')
+		.default(JSON.parse(fs.readFileSync('./config.json')))
+		.start(() => console.log('web server started...')));
 
 gulp.task('default', [
 	'process-server-app',
 	'process-web-app-html',
+	'process-web-app-templates',
 	'process-web-app-css',
 	'process-web-app-js'
 ], function () {
 
 	gulp.watch(webAppFiles, ['process-web-app-js']);
+	gulp.watch(webAppTemplateFiles, ['process-web-app-templates']);
 	gulp.watch(webAppSassFiles, ['process-web-app-css']);
 	gulp.watch(webAppHtmlFiles, ['process-web-app-html']);
 	gulp.watch(serverAppFiles, ['process-server-app']);

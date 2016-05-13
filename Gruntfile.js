@@ -1,5 +1,6 @@
 module.exports = function(grunt) {
 
+	const fs = require('fs');
 	const webpack = require('webpack');
 
 	grunt.initConfig({
@@ -105,7 +106,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-watch');
 
 	grunt.registerTask('server', function() {
-		require('./dist/server').default(grunt.config());
+		require('./dist/server')
+			.default(JSON.parse(fs.readFileSync('./config.json')))
+			.start(() => console.log('web server started'));
 		this.async();
 	});
 
