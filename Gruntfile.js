@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 					{
 						expand: true,
 						cwd: './src',
-						src: ['*.json'],
+						src: ['*.json','!www/**'],
 						dest: './dist'
 					},
 					{
@@ -28,12 +28,6 @@ module.exports = function(grunt) {
 						cwd: './src/www',
 						src: ['*.html'],
 						dest: './dist/www'
-					},
-					{
-						expand: true,
-						cwd: './src/www/tpls',
-						src: ['*.html'],
-						dest: './dist/www/tpls'
 					}
 				]
 			}
@@ -61,6 +55,9 @@ module.exports = function(grunt) {
 				},
 				module: {
 					loaders: [{
+						test: /\.json$/,
+						loader: 'json'
+					},{
 						test: /\.js$/,
 						exclude: /node_modules/,
 						loader: 'babel-loader',
@@ -68,6 +65,9 @@ module.exports = function(grunt) {
 							passPerPreset: true,
 							presets: ['react', 'es2015']
 						}
+					},{
+						test: /\.hbs$/,
+						loader: 'handlebars-loader'
 					}]
 				},
 				plugins: [

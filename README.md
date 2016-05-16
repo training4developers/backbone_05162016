@@ -24,6 +24,16 @@ Breaks:
 
 ## Links
 
+### Course Resources
+
+- [Backbone.js](http://backbonejs.org/)
+- [Underscore.js](http://underscorejs.org/)
+- [Lodash](https://lodash.com/)
+- [Marionette](http://marionettejs.com/)
+- [Node.js](https://nodejs.org/en/)
+- [Hapi](http://hapijs.com/)
+- [Jasmine](http://jasmine.github.io/)
+
 ### Instructor's Resources
 
 - [Eric's Blog](http://t4d.io/)
@@ -52,11 +62,11 @@ Step 3: From the terminal, run the following commands:
 ```bash
 $ npm i
 
-$ npm i -g grunt-cli eslint eslint-plugin-react webpack babel-eslint
+$ npm i -g gulp grunt-cli eslint eslint-plugin-react webpack babel-eslint
 
 $ grunt
 ```
-If you prefer to use Gulp, then substitute 'gulp' for 'grunt-cli' and 'grunt' in the commands above.
+This project supports both Grunt and Gulp. If you prefer to use Gulp, then substitute 'gulp' the last 'grunt' command above.
 
 Step 4: Open a new terminal window, change to the project folder.
 
@@ -65,6 +75,6 @@ Step 5: From the terminal, run the following command:
 ```bash
 $ grunt server
 ```
-If you prefer to use Gulp, then substitute 'gulp' for 'grunt' in the above command.
+This project supports both Grunt and Gulp. If you prefer to use Gulp, then substitute 'gulp' for 'grunt' in the above command.
 
 Step 6: Open a web browser, and navigate to http://localhost:3000

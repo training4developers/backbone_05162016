@@ -1,6 +1,5 @@
-const
-	fs = require('fs'),
-	server = require('./dist/server.js');
+const fs = require('fs');
+const server = require('./dist/server');
 
 fs.readFile('./config.json', function(err, data) {
 
@@ -23,6 +22,6 @@ fs.readFile('./config.json', function(err, data) {
 		return;
 	}
 
-	server(options).start();
+	server(options).start(() => console.log('web server started'));
 
 });

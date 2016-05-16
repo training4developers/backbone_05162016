@@ -5,21 +5,22 @@ const webpackStream = require('webpack-stream');
 const gulp = require('gulp');
 const babel = require('gulp-babel');
 const sass = require('gulp-sass');
-const handlebars = require('gulp-handlebars');
-const defineModule = require('gulp-define-module');
 
 const serverAppFiles = ['src/**/*.js','!src/www/**'];
-const webAppFiles = ['src/www/**/*.js'];
-const webAppTemplateFiles = ['src/www/tpls/*.hbs'];
+const serverDataFiles = ['src/**/*.json','!src/www/**'];
+const webAppFiles = ['src/www/**/*.js','src/www/tpls/**/*.hbs'];
 const webAppHtmlFiles = ['src/www/**/*.html'];
 const webAppSassFiles = ['src/www/css/**/*.scss'];
-
 const entryPoints = [ './src/www/js/index.js' ];
 
 gulp.task('process-server-app', () =>
 	gulp.src(serverAppFiles)
 		.pipe(babel({ presets: ['es2015'] }))
 		.on('error', console.dir)
+		.pipe(gulp.dest('dist')));
+
+gulp.task('process-server-data', () =>
+	gulp.src(serverDataFiles)
 		.pipe(gulp.dest('dist')));
 
 gulp.task('process-web-app-html', () =>
@@ -51,6 +52,9 @@ gulp.task('process-web-app-js', () =>
 								passPerPreset: true,
 								presets: ['react', 'es2015']
 							}
+						},{
+							test: /\.hbs$/,
+							loader: 'handlebars-loader'
 						}]
 					},
 					plugins: [
@@ -65,13 +69,6 @@ gulp.task('process-web-app-js', () =>
 				.pipe(gulp.dest('dist/www/js'))
 				.on('end', resolve)))).catch(err => console.dir(err)));
 
-gulp.task('process-web-app-templates', function() {
-	gulp.src(webAppTemplateFiles)
-		.pipe(handlebars())
-		.pipe(defineModule('node'))
-		.pipe(gulp.dest('./dist/www/tpls'));
-});
-
 gulp.task('server', () =>
 	require('./dist/server')
 		.default(JSON.parse(fs.readFileSync('./config.json')))
@@ -79,16 +76,14 @@ gulp.task('server', () =>
 
 gulp.task('default', [
 	'process-server-app',
+	'process-server-data',
 	'process-web-app-html',
-	'process-web-app-templates',
 	'process-web-app-css',
 	'process-web-app-js'
 ], function () {
-
 	gulp.watch(webAppFiles, ['process-web-app-js']);
-	gulp.watch(webAppTemplateFiles, ['process-web-app-templates']);
 	gulp.watch(webAppSassFiles, ['process-web-app-css']);
 	gulp.watch(webAppHtmlFiles, ['process-web-app-html']);
 	gulp.watch(serverAppFiles, ['process-server-app']);
-
+	gulp.watch(serverDataFiles, ['process-server-data']);
 });
