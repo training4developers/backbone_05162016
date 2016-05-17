@@ -1,6 +1,8 @@
 import _ from 'underscore';
 import Backbone from 'backbone';
 
+import shoppingCart from './shopping_cart';
+
 var Person = Backbone.Model.extend({
 
 	defaults: {
@@ -15,41 +17,15 @@ var Person = Backbone.Model.extend({
 
 });
 
-
-var People = Backbone.Collection.extend({
-
-	getLastNames: function() {
-		return this.models.map(m => m.get('lastName'));
-	}
-
-});
-
-var people = new People();
-
-var person1 = new Person({
-	//id: 1,
+var person = new Person({
+	id: 1,
 	firstName: 'Elaine',
 	lastName: 'Lau',
 	age: 24
 });
 
-people.add(person1);
-
-people.add(new Person({
-	//id: 2,
-	firstName: 'Willie',
-	lastName: 'Huey',
-	age: 23
-}));
-
-console.log(people.getLastNames());
-
-//people.remove(person1);
-
-console.dir(people);
-
-// person.set('middleName', 'Willie');
-// person.set('lastName', 'Chow');
+person.set('middleName', 'Willie');
+person.set('lastName', 'Chow');
 
 // person.on('change:firstName', function(model, newValue) {
 // 	console.dir(model);
@@ -59,5 +35,5 @@ console.dir(people);
 //
 // person.set('firstName', 'Bob');
 
-// console.log(person.id);
-// console.dir(person);
+console.log(person.id);
+console.dir(person);
