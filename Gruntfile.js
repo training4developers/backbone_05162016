@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 
 	const fs = require('fs');
+	const path = require('path');
 	const webpack = require('webpack');
 
 	grunt.initConfig({
@@ -52,6 +53,11 @@ module.exports = function(grunt) {
 				output: {
 					path: './dist/www/js',
 					filename: 'index.js'
+				},
+				resolve: {
+					alias: {
+						backbone: path.join(__dirname, 'node_modules', 'backbone', 'backbone')
+					}
 				},
 				module: {
 					loaders: [{
