@@ -20,11 +20,15 @@ export default Backbone.View.extend({
 		this.detailRows = [];
 	},
 
-	renderDetails: function() {
-
+	remove: function() {
+		this.headerRow.remove();
 		this.detailRows.forEach(detailRow => {
 			detailRow.remove();
 		});
+		Backbone.View.prototype.remove.call(this);
+	},
+
+	renderDetails: function() {
 
 		this.collection.forEach(model => {
 			var detailRow = new this.options.detailView({

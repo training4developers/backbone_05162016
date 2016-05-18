@@ -3,6 +3,7 @@ import Backbone from 'backbone';
 import Widgets from './collections/widgets';
 import Widget from './models/widget';
 import TableView from './views/table';
+import EditView from './views/edit-view';
 import WidgetHeaderView from './views/widget-header';
 import WidgetDetailView from './views/widget-detail';
 
@@ -16,19 +17,50 @@ function AppController() {
 
 	var controller = this;
 
-	this.start = function() {
+	this.handleAction = function(action) {
 
-		controller.currentView = new TableView({
-			container: '#app',
-			collection: widgets,
-			headerView: WidgetHeaderView,
-			detailView: WidgetDetailView
-		});
+		if (controller.currentView) {
+			controller.currentView.remove();
+			controller.currentView = null;
+		}
+
+		switch(action.type) {
+			case 'edit-row':
+				controller.currentView = new EditView({
+					container: '#app'
+				});
+				break;
+			default:
+
+				controller.currentView = new TableView({
+					container: '#app',
+					collection: action.data,
+					headerView: WidgetHeaderView,
+					detailView: WidgetDetailView
+				});
+
+				controller.listenTo(controller.currentView, 'edit-row', function(model) {
+					console.log('edit row clicked!', JSON.stringify(model.toJSON()));
+
+					this.handleAction({
+						type: 'edit-row',
+						data: model
+					});
+				});
+
+				break;
+		}
 
 		controller.currentView.render();
 
-		controller.listenTo(controller.currentView, 'edit-row', function(model) {
-			console.log('edit row clicked!', JSON.stringify(model.toJSON()));
+
+	};
+
+
+	this.start = function() {
+		this.handleAction({
+			type: 'table',
+			data: widgets
 		});
 	};
 
