@@ -1,7 +1,10 @@
+import _ from 'underscore';
+import Backbone from 'backbone';
 import Widgets from './collections/widgets';
 import Widget from './models/widget';
-import WidgetTableView from './views/widget-table';
-import WidgetCompactRowView from './views/widget-compact-row';
+import TableView from './views/table';
+import WidgetHeaderView from './views/widget-header';
+import WidgetDetailView from './views/widget-detail';
 
 var widgets = new Widgets([
 	new Widget({ id: 1, name: 'clippy', description: 'clippy is huge', color: 'gray', size: 'huge', quantity: 2 }),
@@ -9,11 +12,31 @@ var widgets = new Widgets([
 	new Widget({ id: 3, name: 'boat', description: 'clippy is small', color: 'black', size: 'small', quantity: 5 })
 ]);
 
-var widgetTableView = new WidgetTableView({
-	container: '#app',
-	collection: widgets,
-	headerRowView: WidgetCompactHeaderView,
-	widgetRowView: WidgetCompactRowView
-});
+function AppController() {
 
-widgetTableView.render();
+	var controller = this;
+
+	this.start = function() {
+
+		controller.currentView = new TableView({
+			container: '#app',
+			collection: widgets,
+			headerView: WidgetHeaderView,
+			detailView: WidgetDetailView
+		});
+
+		controller.currentView.render();
+
+		controller.listenTo(controller.currentView, 'edit-row', function(model) {
+			console.log('edit row clicked!', JSON.stringify(model.toJSON()));
+		});
+	};
+
+}
+
+_.extend(AppController.prototype, Backbone.Events);
+
+var appController = new AppController();
+appController.start();
+
+console.dir(appController);

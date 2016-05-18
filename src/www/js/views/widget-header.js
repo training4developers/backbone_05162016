@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import Backbone from 'backbone';
-import widgetRowTemplate from '../../tpls/widget-row.hbs';
+import widgetHeader from '../../tpls/widget-header.hbs';
 
 export default Backbone.View.extend({
 
@@ -11,7 +11,7 @@ export default Backbone.View.extend({
 	},
 
 	render: function() {
-		this.$el.html(widgetRowTemplate(this.model.toJSON()));
+		this.$el.html(widgetHeader());
 		$(this.options.container).append(this.$el);
 	}
 
