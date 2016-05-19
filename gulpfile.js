@@ -19,7 +19,7 @@ const webpackConfigs = [
 	},
 	{
 		entryPoint: './src/tests/specs.js',
-		outputFolder: 'tests'
+		outputFolder: '__tests__'
 	}
 ];
 

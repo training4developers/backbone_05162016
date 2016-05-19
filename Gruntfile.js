@@ -87,7 +87,7 @@ module.exports = function(grunt) {
 			tests: {
 				entry: './src/tests/specs.js',
 				output: {
-					path: './tests',
+					path: './__tests__',
 					filename: 'specs.js'
 				},
 				resolve: {
