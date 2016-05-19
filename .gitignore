@@ -35,4 +35,5 @@ node_modules
 .sass-cache
 dist
 tests
+!src/tests
 .vscode
