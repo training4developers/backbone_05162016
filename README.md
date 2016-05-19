@@ -20,7 +20,7 @@ Breaks:
 - Day 1 - Backbone/Marionette
 - Day 2 - Backbone/Marionette
 - Day 3 - Node/Hapi/SocketIO
-- Day 4 - SocketIO/Unit Testing
+- Day 4 - SocketIO/Unit Testing/React
 
 ## Links
 
@@ -32,7 +32,9 @@ Breaks:
 - [Marionette](http://marionettejs.com/)
 - [Node.js](https://nodejs.org/en/)
 - [Hapi](http://hapijs.com/)
+- [Socket.io](http://socket.io/)
 - [Jasmine](http://jasmine.github.io/)
+- [Karma](https://karma-runner.github.io/0.13/index.html)
 
 ### Instructor's Resources
 
@@ -40,7 +42,7 @@ Breaks:
 - [WintellectNOW](https://www.wintellectnow.com/Home/Instructor?instructorId=EricGreene) - Special Offer Code: GREENE-2016
 - [React Blog Posts](https://github.com/training4developers/react-flux-blog)
 - [TopTal Angular Directive](https://www.toptal.com/angular-js/angular-js-demystifying-directives)
-- [JavaScript Videos](https://www.toptal.com/videos)
+- [TopTal JavaScript Videos](https://www.toptal.com/videos)
 - [React SitePoint](http://www.sitepoint.com/author/ericgreene/)
 
 ### Other Resources
@@ -62,7 +64,7 @@ Step 3: From the terminal, run the following commands:
 ```bash
 $ npm i
 
-$ npm i -g gulp grunt-cli eslint eslint-plugin-react webpack babel-eslint
+$ npm i -g gulp grunt-cli eslint eslint-plugin-react webpack babel-eslint karma-cli
 
 $ grunt
 ```
