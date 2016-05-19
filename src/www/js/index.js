@@ -1,74 +1,47 @@
+import './template-cache';
+import $ from 'jquery';
 import _ from 'underscore';
 import Backbone from 'backbone';
-import Widgets from './collections/widgets';
-import Widget from './models/widget';
-import TableView from './views/table';
-import EditView from './views/edit-view';
-import WidgetHeaderView from './views/widget-header';
-import WidgetDetailView from './views/widget-detail';
+import Marionette from 'backbone.marionette';
 
-var widgets = new Widgets([
-	new Widget({ id: 1, name: 'clippy', description: 'clippy is huge', color: 'gray', size: 'huge', quantity: 2 }),
-	new Widget({ id: 2, name: 'cloud', description: 'clippy is pink', color: 'pink', size: 'medium', quantity: 1300 }),
-	new Widget({ id: 3, name: 'boat', description: 'clippy is small', color: 'black', size: 'small', quantity: 5 })
-]);
+var colors = new Backbone.Collection();
+colors.add(new Backbone.Model({ id: 'red', name: 'Red' }));
+colors.add(new Backbone.Model({ id: 'white', name: 'White' }));
+colors.add(new Backbone.Model({ id: 'blue', name: 'Blue' }));
 
-function AppController() {
+var ColorView = Marionette.ItemView.extend({
+	tagName: 'li',
+	template: 'list-item'
+});
 
-	var controller = this;
+var ColorsView = Marionette.CollectionView.extend({
+	tagName: 'ul',
+	childView: ColorView
+});
 
-	this.handleAction = function(action) {
+var colorsView = new ColorsView({
+	collection: colors
+});
 
-		if (controller.currentView) {
-			controller.currentView.remove();
-			controller.currentView = null;
-		}
+colorsView.render();
+$('main').append(colorsView.el);
 
-		switch(action.type) {
-			case 'edit-row':
-				controller.currentView = new EditView({
-					container: '#app'
-				});
-				break;
-			default:
+// const App = Marionette.Application.extend({
+//
+// 	initialize: function(options) {
+// 		console.dir(options);
+// 	}
+//
+// });
 
-				controller.currentView = new TableView({
-					container: '#app',
-					collection: action.data,
-					headerView: WidgetHeaderView,
-					detailView: WidgetDetailView
-				});
+// const RootView = Marionette.LayoutView.extend({
+// 	el: 'main',
+//
+//
+// });
 
-				controller.listenTo(controller.currentView, 'edit-row', function(model) {
-					console.log('edit row clicked!', JSON.stringify(model.toJSON()));
-
-					this.handleAction({
-						type: 'edit-row',
-						data: model
-					});
-				});
-
-				break;
-		}
-
-		controller.currentView.render();
-
-
-	};
-
-
-	this.start = function() {
-		this.handleAction({
-			type: 'table',
-			data: widgets
-		});
-	};
-
-}
-
-_.extend(AppController.prototype, Backbone.Events);
-
-var appController = new AppController();
-appController.start();
-
-console.dir(appController);
+// const app = new App({
+// 	container: 'main'
+// });
+//
+// app.start();

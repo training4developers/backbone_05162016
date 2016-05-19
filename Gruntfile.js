@@ -114,7 +114,8 @@ module.exports = function(grunt) {
 	grunt.registerTask('server', function() {
 		require('./dist/server')
 			.default(JSON.parse(fs.readFileSync('./config.json')))
-			.start(() => console.log('web server started'));
+			.start(() => console.log('web server started'))
+			.catch(console.error);
 		this.async();
 	});
 

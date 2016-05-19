@@ -72,7 +72,8 @@ gulp.task('process-web-app-js', () =>
 gulp.task('server', () =>
 	require('./dist/server')
 		.default(JSON.parse(fs.readFileSync('./config.json')))
-		.start(() => console.log('web server started...')));
+		.start(() => console.log('web server started...')))
+		.catch(console.error);
 
 gulp.task('default', [
 	'process-server-app',
