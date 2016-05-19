@@ -80,3 +80,11 @@ $ grunt server
 This project supports both Grunt and Gulp. If you prefer to use Gulp, then substitute 'gulp' for 'grunt' in the above command.
 
 Step 6: Open a web browser, and navigate to http://localhost:3000
+
+Step 7: To start Karma, open a new terminal, then run the following command.
+
+```bash
+$ karma start karma.conf.js
+```
+
+Karma will run an instance of Chrome which is where the unit tests are executed. The output of the tests will be to the terminal window.
