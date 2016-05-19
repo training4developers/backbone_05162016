@@ -8,10 +8,20 @@ const sass = require('gulp-sass');
 
 const serverAppFiles = ['src/**/*.js','!src/www/**'];
 const serverDataFiles = ['src/**/*.json','!src/www/**'];
-const webAppFiles = ['src/www/**/*.js','src/www/tpls/**/*.hbs'];
+const webAppFiles = ['src/www/**/*.js','src/www/tpls/**/*.hbs','src/tests/**/*.js'];
 const webAppHtmlFiles = ['src/www/**/*.html'];
 const webAppSassFiles = ['src/www/css/**/*.scss'];
-const entryPoints = [ './src/www/js/index.js' ];
+
+const webpackConfigs = [
+	{
+		entryPoint: './src/www/js/index.js',
+		outputFolder: 'dist/www/js'
+	},
+	{
+		entryPoint: './src/tests/specs.js',
+		outputFolder: 'tests'
+	}
+];
 
 gulp.task('process-server-app', () =>
 	gulp.src(serverAppFiles)
@@ -33,12 +43,12 @@ gulp.task('process-web-app-css', () =>
 		.pipe(gulp.dest('dist/www/css')));
 
 gulp.task('process-web-app-js', () =>
-	Promise.all(entryPoints.map(entryPoint =>
+	Promise.all(webpackConfigs.map(webpackConfig =>
 		new Promise((resolve, reject) =>
-			gulp.src(entryPoint)
+			gulp.src(webpackConfig.entryPoint)
 				.pipe(webpackStream({
 					output: {
-						filename: path.basename(entryPoint)
+						filename: path.basename(webpackConfig.entryPoint)
 					},
 					module: {
 						loaders: [{
@@ -66,14 +76,14 @@ gulp.task('process-web-app-js', () =>
 					]
 				}))
 				.on('error', reject)
-				.pipe(gulp.dest('dist/www/js'))
-				.on('end', resolve)))).catch(err => console.dir(err)));
+				.pipe(gulp.dest(webpackConfig.outputFolder))
+				.on('end', resolve)))).catch(console.error));
 
 gulp.task('server', () =>
 	require('./dist/server')
 		.default(JSON.parse(fs.readFileSync('./config.json')))
-		.start(() => console.log('web server started...')))
-		.catch(console.error);
+		.start(() => console.log('web server started...'))
+		.catch(console.error));
 
 gulp.task('default', [
 	'process-server-app',

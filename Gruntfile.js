@@ -83,6 +83,42 @@ module.exports = function(grunt) {
 						'window.fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
 					})
 				]
+			},
+			tests: {
+				entry: './src/tests/specs.js',
+				output: {
+					path: './tests',
+					filename: 'specs.js'
+				},
+				resolve: {
+					alias: {
+						backbone: path.join(__dirname, 'node_modules', 'backbone', 'backbone')
+					}
+				},
+				module: {
+					loaders: [{
+						test: /\.json$/,
+						loader: 'json'
+					},{
+						test: /\.js$/,
+						exclude: /node_modules/,
+						loader: 'babel-loader',
+						query: {
+							passPerPreset: true,
+							presets: ['react', 'es2015']
+						}
+					},{
+						test: /\.hbs$/,
+						loader: 'handlebars-loader'
+					}]
+				},
+				plugins: [
+					new webpack.ProvidePlugin({
+						'Promise': 'exports?global.Promise!es6-promise',
+						'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
+						'window.fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+					})
+				]
 			}
 		},
 		watch: {
@@ -99,8 +135,12 @@ module.exports = function(grunt) {
 				tasks: ['babel']
 			},
 			webpack: {
-				files: ['src/www/**/*.js'],
+				files: ['src/www/**/*.js','src/www/tpls/**/*.hbs'],
 				tasks: ['webpack']
+			},
+			webpackTests: {
+				files: ['src/tests/**/*.js'],
+				tasks: ['webpack:tests']
 			}
 		}
 	});

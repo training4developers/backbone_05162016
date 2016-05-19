@@ -2,17 +2,28 @@ import { Server } from 'hapi';
 import inert from 'inert';
 import apiRoutes from './api-routes';
 import path from 'path';
+import socketServer from 'socket.io';
 
 export default config => {
 
 	const server = new Server();
+
+	server.connection({ port: config.webServer.port });
+
+	const io = socketServer(server.listener);
+
+	io.on('connection', function (socket) {
+		socket.on('echo', function (msg) {
+			console.log(msg);
+			socket.emit('echo', msg);
+		});
+	});
 
 	const serverConfig = new Promise((resolve, reject) => {
 
 		server.register(inert, err => {
 
 			if (err) return reject(err);
-			server.connection({ port: config.webServer.port });
 
 			server.route(apiRoutes(config));
 
