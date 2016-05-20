@@ -13,10 +13,25 @@ export default config => {
 	const io = socketServer(server.listener);
 
 	io.on('connection', function (socket) {
+
+		console.log('connection made');
+
 		socket.on('echo', function (msg) {
 			console.log(msg);
 			socket.emit('echo', msg);
 		});
+
+		var lastWidgetId = 0;
+		setInterval(function() {
+			socket.emit('event', JSON.stringify({
+				id: ++lastWidgetId,
+				name: 'A widget',
+				color: 'red',
+				size: 'large',
+				quantity: 2
+			}));
+		}, 250);
+
 	});
 
 	const serverConfig = new Promise((resolve, reject) => {
@@ -63,7 +78,7 @@ export default config => {
 
 	return {
 		start: cb => serverConfig.then(server => server.start(cb)),
-		stop: cb =>  serverConfig.then(server => server.start(cb))
+		stop: cb =>  serverConfig.then(server => server.stop(cb))
 	};
 
 };

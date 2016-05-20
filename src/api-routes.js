@@ -42,8 +42,4 @@ export default config => [
 		}
 	}
 
-
-
-
-
 ];
